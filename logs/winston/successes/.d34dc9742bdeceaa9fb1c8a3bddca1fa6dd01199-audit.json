@@ -1,0 +1,15 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/.d34dc9742bdeceaa9fb1c8a3bddca1fa6dd01199-audit.json",
+  "files": [
+    {
+      "date": 1685873309546,
+      "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/um-2023-04-06-16-success.log",
+      "hash": "367030d6f48efc7afd26aaca1059cc926f97ff9b5d935a6714bbdf0e90df7848"
+    }
+  ],
+  "hashType": "sha256"
+}
