@@ -8,7 +8,7 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
     hour = date.getHours(),
     minutes = date.getMinutes(),
     seconds = date.getSeconds()
-  return `${date.toDateString()} ${hour}:${minutes}:${seconds} [${label}] ${level}: ${message}`
+  return `${date.toDateString()} ${hour}:${minutes}:${seconds} -> [${label}] ${level}: ${message}`
 })
 
 const logger = createLogger({
@@ -27,7 +27,7 @@ const logger = createLogger({
       datePattern: 'YYYY-DD-MM-HH',
       zippedArchive: true,
       maxSize: '20m',
-      maxFiles: '14d',
+      maxFiles: '1d',
     }),
   ],
 })
