@@ -1,20 +1,20 @@
 {
-    "keep": {
-        "days": true,
-        "amount": 1
+  "keep": {
+    "days": true,
+    "amount": 1
+  },
+  "auditLog": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/.9cc810292c3fb149d927072891ec9f800a753445-audit.json",
+  "files": [
+    {
+      "date": 1686301596025,
+      "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/um-2023-09-06-15-success.log",
+      "hash": "e0997dbf719a18f06c0be3dd5630a05a658a9b17b2720b1f272547218b90a992"
     },
-    "auditLog": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/.9cc810292c3fb149d927072891ec9f800a753445-audit.json",
-    "files": [
-        {
-            "date": 1686301596025,
-            "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/um-2023-09-06-15-success.log",
-            "hash": "e0997dbf719a18f06c0be3dd5630a05a658a9b17b2720b1f272547218b90a992"
-        },
-        {
-            "date": 1686304804480,
-            "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/um-2023-09-06-16-success.log",
-            "hash": "e9260bdc923f977bd7db49439ed040cf6f7c8cc7c06feb68a8103355513a2ed2"
-        }
-    ],
-    "hashType": "sha256"
+    {
+      "date": 1686304804480,
+      "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/successes/um-2023-09-06-16-success.log",
+      "hash": "e9260bdc923f977bd7db49439ed040cf6f7c8cc7c06feb68a8103355513a2ed2"
+    }
+  ],
+  "hashType": "sha256"
 }
