@@ -1,0 +1,14 @@
+Fri Jun 09 2023 16:13:28 -> [UM] error: global error handler User validation failed: role: Path `role` is required.
+Fri Jun 09 2023 16:13:52 -> [UM] error: global error handler [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "role"
+    ],
+    "message": "role is required"
+  }
+]
+Fri Jun 09 2023 16:15:23 -> [UM] error: global error handler error logger
