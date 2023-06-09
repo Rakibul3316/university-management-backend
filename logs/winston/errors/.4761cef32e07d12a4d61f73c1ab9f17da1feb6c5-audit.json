@@ -19,6 +19,21 @@
             "date": 1686301415785,
             "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/errors/um-2023-09-06-15-error.log",
             "hash": "6685085e47e61562a7ceabd09e52e6323df0ee9ec67b3584198f9279f77ced15"
+        },
+        {
+            "date": 1686304804485,
+            "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/errors/um-2023-09-06-16-error.log",
+            "hash": "36c96773ed11dd82b196af303eba157077b0a6bfe831de1d4194f0e2ea6c9439"
+        },
+        {
+            "date": 1686317027948,
+            "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/errors/um-2023-09-06-19-error.log",
+            "hash": "9f1747cf9533dac120f49c93eb15ca9d264566703e23a241ab8fed447f206b00"
+        },
+        {
+            "date": 1686319295922,
+            "name": "/media/rakibul/WORK FILES/programming-hero-next-level-course/3.nosql-project/university-management/logs/winston/errors/um-2023-09-06-20-error.log",
+            "hash": "aee5e792c4d1ee4ee7efeccf044c5da016095339b4ed18e6be19d031fb61692e"
         }
     ],
     "hashType": "sha256"
