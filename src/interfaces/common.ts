@@ -5,3 +5,10 @@ export type IGenericErrorResponse = {
   message: string;
   errorMessages: IGenericErrorMessage[];
 };
+
+export type IApiReponse<T> = {
+  statusCode: number;
+  success: boolean;
+  message?: string | null;
+  data?: T | null;
+};
