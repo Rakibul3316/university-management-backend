@@ -34,3 +34,11 @@ export const academicSemesterTitleCodeMapper: {
   Summer: '02',
   Fall: '03',
 };
+
+export const academicSemesterSearchFields = ['title', 'year', 'code'];
+export const academicSemesterFilterableFields = [
+  'searchTerm',
+  'title',
+  'year',
+  'code',
+];
