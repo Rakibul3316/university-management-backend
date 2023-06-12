@@ -1,8 +1,14 @@
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
-import { IAcademicSemester } from './academicSemester.interface';
+import {
+  IAcademicSemester,
+  IAcademicSemesterFilters,
+} from './academicSemester.interface';
 import { AcademicSemester } from './academicSemester.model';
-import { academicSemesterTitleCodeMapper } from './acedemicSemester.constant';
+import {
+  academicSemesterSearchFields,
+  academicSemesterTitleCodeMapper,
+} from './acedemicSemester.constant';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IGenericResponse } from '../../../interfaces/common';
 import calculatePagination from '../../../helpers/paginationHelpers';
@@ -19,8 +25,33 @@ const createSemesterToDB = async (
 };
 
 const getAllSemestersFromDB = async (
+  filters: IAcademicSemesterFilters,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IAcademicSemester[]>> => {
+  // Searching & filtering
+  const { searchTerm, ...filterData } = filters;
+  const andConditions = [];
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: academicSemesterSearchFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
+  // Pagination & Sorting
   const { page, skip, limit, sortBy, sortOrder } =
     calculatePagination(paginationOptions);
 
@@ -30,12 +61,16 @@ const getAllSemestersFromDB = async (
     sortConditioins[sortBy] = sortOrder;
   }
 
-  const result = await AcademicSemester.find()
+  const whereCondition =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  const result = await AcademicSemester.find(whereCondition)
     .sort(sortConditioins)
     .skip(skip)
     .limit(limit);
 
-  const total = await AcademicSemester.countDocuments();
+  // const total = await AcademicSemester.countDocuments();
+  const total = result.length;
 
   return {
     meta: {
