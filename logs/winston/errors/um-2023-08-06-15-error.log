@@ -1,4 +1,0 @@
-Thu Jun 08 2023 15:49:9 -> [UM] error: Failed to connect database bad auth : Authentication failed.
-Thu Jun 08 2023 15:50:24 -> [UM] error: Failed to connect database The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
-Thu Jun 08 2023 15:51:41 -> [UM] error: Failed to connect database The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
-Thu Jun 08 2023 15:52:50 -> [UM] error: Failed to connect database The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
