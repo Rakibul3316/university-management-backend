@@ -6,9 +6,11 @@ export type IGenericErrorResponse = {
   errorMessages: IGenericErrorMessage[];
 };
 
-export type IApiReponse<T> = {
-  statusCode: number;
-  success: boolean;
-  message?: string | null;
-  data?: T | null;
+export type IGenericResponse<T> = {
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+  };
+  data: T;
 };
