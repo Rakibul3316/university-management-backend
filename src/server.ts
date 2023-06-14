@@ -24,7 +24,7 @@ async function connectDB() {
     logger.info('Database connection successful.');
     // Listening app
     server = app.listen(config.port, () => {
-      logger.info(`Servier is listening on port ${config.port}`);
+      logger.info(`Server is listening on port ${config.port}`);
     });
   } catch (error) {
     errorLogger.error('Failed to connect database', error);
