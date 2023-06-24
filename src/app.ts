@@ -37,4 +37,16 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// const data = {
+//   year: '2023',
+//   code: '02',
+// };
+
+// async function test() {
+//   const id = await generateStudentId(data);
+//   return id;
+// }
+
+// test();
+
 export default app;
