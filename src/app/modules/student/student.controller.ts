@@ -5,14 +5,14 @@ import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import { studentFilterableFields } from './student.constant';
 import { IStudent } from './student.interface';
-import { StudentService } from './student.service';
+import { StudentServices } from './student.service';
 import sendResponse from '../../../shared/sendReponse';
 
 const getAllStudents = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, studentFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
 
-  const result = await StudentService.getAllStudents(
+  const result = await StudentServices.getAllStudentsFromDB(
     filters,
     paginationOptions
   );
@@ -29,7 +29,7 @@ const getAllStudents = catchAsync(async (req: Request, res: Response) => {
 const getSingleStudent = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
 
-  const result = await StudentService.getSingleStudent(id);
+  const result = await StudentServices.getSingleStudentFromDB(id);
 
   sendResponse<IStudent>(res, {
     statusCode: httpStatus.OK,
@@ -44,7 +44,7 @@ const updateStudent = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const updatedData = req.body;
 
-  const result = await StudentService.updateStudent(id, updatedData);
+  const result = await StudentServices.updateStudentToDB(id, updatedData);
 
   sendResponse<IStudent>(res, {
     statusCode: httpStatus.OK,
@@ -58,7 +58,7 @@ const updateStudent = catchAsync(async (req: Request, res: Response) => {
 const deleteStudent = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
 
-  const result = await StudentService.deleteStudent(id);
+  const result = await StudentServices.deleteStudentFromDB(id);
 
   sendResponse<IStudent>(res, {
     statusCode: httpStatus.OK,
@@ -69,7 +69,7 @@ const deleteStudent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const StudentController = {
+export const StudentControllers = {
   getAllStudents,
   getSingleStudent,
   updateStudent,

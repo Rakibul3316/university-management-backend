@@ -7,17 +7,31 @@ import httpStatus from 'http-status';
 
 const createStudent = catchAsync(async (req: Request, res: Response) => {
   const { student, ...userData } = req.body;
-  const result = await UserServices.createStudent(student, userData);
+  const result = await UserServices.createStudentToDB(student, userData);
 
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,
     meta: null,
-    message: 'user created successfully!',
+    message: 'Student created successfully!',
+    data: result,
+  });
+});
+
+const createFaculty = catchAsync(async (req: Request, res: Response) => {
+  const { faculty, ...userData } = req.body;
+  const result = await UserServices.createFacultyToDB(faculty, userData);
+
+  sendResponse<IUser>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculty created successfully!',
+    meta: null,
     data: result,
   });
 });
 
 export const UserControllers = {
   createStudent,
+  createFaculty,
 };

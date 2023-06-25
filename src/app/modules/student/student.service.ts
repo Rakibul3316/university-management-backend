@@ -11,7 +11,7 @@ import { Student } from './student.model';
 import calculatePagination from '../../../helpers/paginationHelpers';
 import { User } from '../user/user.model';
 
-const getAllStudents = async (
+const getAllStudentsFromDB = async (
   filters: IStudentFilters,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IStudent[]>> => {
@@ -68,7 +68,7 @@ const getAllStudents = async (
   };
 };
 
-const getSingleStudent = async (id: string): Promise<IStudent | null> => {
+const getSingleStudentFromDB = async (id: string): Promise<IStudent | null> => {
   const result = await Student.findById(id)
     .populate('academicSemester')
     .populate('academicDepartment')
@@ -76,7 +76,7 @@ const getSingleStudent = async (id: string): Promise<IStudent | null> => {
   return result;
 };
 
-const updateStudent = async (
+const updateStudentToDB = async (
   id: string,
   payload: Partial<IStudent>
 ): Promise<IStudent | null> => {
@@ -124,7 +124,7 @@ const updateStudent = async (
   return result;
 };
 
-const deleteStudent = async (id: string): Promise<IStudent | null> => {
+const deleteStudentFromDB = async (id: string): Promise<IStudent | null> => {
   // check if the student is exist
   const isExist = await Student.findOne({ _id: id });
 
@@ -143,19 +143,19 @@ const deleteStudent = async (id: string): Promise<IStudent | null> => {
     }
     //delete user
     await User.deleteOne({ student: id });
-    session.commitTransaction();
-    session.endSession();
+    await session.commitTransaction();
+    await session.endSession();
 
     return student;
   } catch (error) {
-    session.abortTransaction();
+    await session.abortTransaction();
     throw error;
   }
 };
 
-export const StudentService = {
-  getAllStudents,
-  getSingleStudent,
-  updateStudent,
-  deleteStudent,
+export const StudentServices = {
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
+  updateStudentToDB,
+  deleteStudentFromDB,
 };
