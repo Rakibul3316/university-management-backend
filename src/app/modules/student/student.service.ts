@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SortOrder } from 'mongoose';
+import mongoose, { SortOrder } from 'mongoose';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 
@@ -9,8 +9,9 @@ import { studentSearchableFields } from './student.constant';
 import { IStudent, IStudentFilters } from './student.interface';
 import { Student } from './student.model';
 import calculatePagination from '../../../helpers/paginationHelpers';
+import { User } from '../user/user.model';
 
-const getAllStudents = async (
+const getAllStudentsFromDB = async (
   filters: IStudentFilters,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IStudent[]>> => {
@@ -67,19 +68,19 @@ const getAllStudents = async (
   };
 };
 
-const getSingleStudent = async (id: string): Promise<IStudent | null> => {
-  const result = await Student.findOne({ id })
+const getSingleStudentFromDB = async (id: string): Promise<IStudent | null> => {
+  const result = await Student.findById(id)
     .populate('academicSemester')
     .populate('academicDepartment')
     .populate('academicFaculty');
   return result;
 };
 
-const updateStudent = async (
+const updateStudentToDB = async (
   id: string,
   payload: Partial<IStudent>
 ): Promise<IStudent | null> => {
-  const isExist = await Student.findOne({ id });
+  const isExist = await Student.findOne({ _id: id });
 
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Student not found !');
@@ -113,23 +114,48 @@ const updateStudent = async (
     });
   }
 
-  const result = await Student.findOneAndUpdate({ id }, updatedStudentData, {
-    new: true,
-  });
+  const result = await Student.findOneAndUpdate(
+    { _id: id },
+    updatedStudentData,
+    {
+      new: true,
+    }
+  );
   return result;
 };
 
-const deleteStudent = async (id: string): Promise<IStudent | null> => {
-  const result = await Student.findByIdAndDelete(id)
-    .populate('academicSemester')
-    .populate('academicDepartment')
-    .populate('academicFaculty');
-  return result;
+const deleteStudentFromDB = async (id: string): Promise<IStudent | null> => {
+  // check if the student is exist
+  const isExist = await Student.findOne({ _id: id });
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found !');
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+    //delete student first
+    const student = await Student.findOneAndDelete({ _id: id }, { session });
+    if (!student) {
+      throw new ApiError(404, 'Failed to delete student');
+    }
+    //delete user
+    await User.deleteOne({ student: id });
+    await session.commitTransaction();
+    await session.endSession();
+
+    return student;
+  } catch (error) {
+    await session.abortTransaction();
+    throw error;
+  }
 };
 
-export const StudentService = {
-  getAllStudents,
-  getSingleStudent,
-  updateStudent,
-  deleteStudent,
+export const StudentServices = {
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
+  updateStudentToDB,
+  deleteStudentFromDB,
 };
