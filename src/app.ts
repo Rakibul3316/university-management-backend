@@ -1,8 +1,9 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routers from './app/routes';
 import httpStatus from 'http-status';
+import cookieParser from 'cookie-parser';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
 const app: Application = express();
 
@@ -11,6 +12,7 @@ app.use(cors());
 // Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // All Routes
 app.use('/api/v1', routers);
@@ -36,17 +38,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   });
   next();
 });
-
-// const data = {
-//   year: '2023',
-//   code: '02',
-// };
-
-// async function test() {
-//   const id = await generateStudentId(data);
-//   return id;
-// }
-
-// test();
 
 export default app;
