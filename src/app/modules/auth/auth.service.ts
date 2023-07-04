@@ -2,13 +2,14 @@ import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import { User } from '../user/user.model';
 import {
+  IChangePassword,
   ILoginUser,
   ILoginUserReponse,
   IRefershTokenResponse,
 } from './auth.interface';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import config from '../../../config';
-import { Secret } from 'jsonwebtoken';
+import { JwtPayload, Secret } from 'jsonwebtoken';
 
 const loginUserToSystem = async (
   payload: ILoginUser
@@ -87,7 +88,36 @@ const refreshToken = async (
   };
 };
 
+const changePasswordToDB = async (
+  user: JwtPayload | null,
+  payload: IChangePassword
+): Promise<void> => {
+  const { oldPassword, newPassword } = payload;
+
+  const isUserExist = await User.findOne({ id: user?.userId }).select(
+    '+password'
+  );
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
+
+  if (
+    isUserExist.password &&
+    !(await User.isPasswordMatch(oldPassword, isUserExist.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Old Password is incorrect');
+  }
+
+  isUserExist.password = newPassword;
+  isUserExist.needsPasswordChange = false;
+
+  // updating using save()
+  isUserExist.save();
+};
+
 export const AuthServices = {
   loginUserToSystem,
   refreshToken,
+  changePasswordToDB,
 };
